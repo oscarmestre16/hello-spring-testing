@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     options {
@@ -7,15 +6,11 @@ pipeline {
     stages {
         stage('Test') {
             steps {
+                git url: 'http://10.250.12.1:8929/root/hello-spring-testing.git', branch:'master'
                 sh './gradlew test'
-                archiveArtifacts artifacts: 'build/test-results/test/TEST-*.xml'
             }
         stage('Build') {
             steps {                
                 sh './gradlew assemble'
             }
         }
-        stage('deploy') {
-            steps {
-                sh 'docker-compose up -d'
-            }
