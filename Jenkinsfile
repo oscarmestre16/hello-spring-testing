@@ -7,15 +7,28 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage('Test') {
+        stage('Build') {
             steps {
                 git url: 'http://10.250.12.1:8929/root/hello-spring-testing.git', branch:'master'
-                sh './gradlew test'
+                sh './gradlew assemble'
             }
-        stage('Build') {
-            steps { 
-                withGradle {               
-                    sh './gradlew assemble'
+            post {
+                success {
+                    archiveArtifacts 'build/libs/*jar'
                 }
             }
         }
+        stage('Test') {
+            steps { 
+                withGradle {               
+                    sh './gradlew test'
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts 'build/test-results/test/TEST-*.xml'
+                }
+            }
+        }
+    }
+}
