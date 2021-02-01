@@ -30,5 +30,17 @@ pipeline {
                 }
             }
         }
+        stage('pitest'){
+            steps{
+                withGradle{
+                    sh './gradlew clean pitest'
+                }
+            }
+            post{
+                always{
+                    pitmutation mutationStatsFile: 'build/reports/pitest/**/mutation.xml
+                }
+            }
+        }
     }
 }
