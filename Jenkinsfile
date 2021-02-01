@@ -9,7 +9,6 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git url: 'http://10.250.12.1:8929/root/hello-spring-testing.git', branch:'master'
                 sh './gradlew assemble'
             }
             post {
