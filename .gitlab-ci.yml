@@ -21,4 +21,4 @@ build-stage:
     artifacts:
             when: always
             paths:
-                - build/libs/*.jar
+                - build/reports/pitest/*/mutations.xml
