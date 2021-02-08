@@ -23,10 +23,7 @@ pipeline {
                    sh './gradlew check'
                }
                withSonarQubeEnv(credentialsId: 'e6a2aae27b1ef44cc95c48eaf9693dc9f3b3b18f', installationName: 'local'){
-                    configFileProvider([configFile(fileId: 'GradleProperties-sonarqube',
-                                     targetLocation: 'gradle.properties')]){
-                                    sh'./gradlew sonarqube'
-                                    }
+                    sh'./gradlew sonarqube'
                }
             }
             post {
@@ -48,14 +45,14 @@ pipeline {
                 }
             }
         }
-        //stage('sonarqube') {
-          //  steps {
-            //    withGradle {
-              //  configFileProvider([configFile(fileId: 'GradleProperties-sonarqube',
-               //  targetLocation: 'gradle.properties')])
-                //    sh './gradlew sonarqube'
-             //   }
-           // }
-       // }
+        stage('sonarqube') {
+            steps {
+                withGradle {
+                configFileProvider([configFile(fileId: 'GradleProperties-sonarqube',
+                 targetLocation: 'gradle.properties')])
+                    sh './gradlew sonarqube'
+                }
+            }
+        }
     }
 }
