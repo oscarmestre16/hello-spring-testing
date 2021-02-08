@@ -22,11 +22,11 @@ pipeline {
                     sh './gradlew check'
                 }
             }
-            post {
-               always {
+            //post {
+               //always {
                     //recordIssues enabledForFailure: true, tool: sonarQube(pattern: 'build/sonar/*.xml')
-                }
-            }
+               // }
+           // }
         }
         stage('Build') {
             steps {
