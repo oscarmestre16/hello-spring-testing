@@ -22,8 +22,8 @@ pipeline {
                withGradle {
                    sh './gradlew check'
                }
-               withSonarQubeEnv(credentialsId: '366cad3b5c2e3fc5f6bf3a6b01a08205d5ca1f11', installationName: 'local'){
-                    sh'.gradlew sonarqube'
+               withSonarQubeEnv(credentialsId: 'e6a2aae27b1ef44cc95c48eaf9693dc9f3b3b18f', installationName: 'local'){
+                    sh'./gradlew sonarqube'
                }
             }
             post {
