@@ -39,6 +39,7 @@ pipeline {
                     archiveArtifacts 'build/libs/*.jar'
                 }
             }
+        }
         stage('sonarqube') {
             steps {
                 withGradle {
@@ -47,8 +48,6 @@ pipeline {
                     sh './gradlew sonarqube'
                 }
             }
-
-
         }
     }
 }
