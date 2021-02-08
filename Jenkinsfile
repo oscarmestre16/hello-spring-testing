@@ -17,16 +17,20 @@ pipeline {
             }
         }
         stage('QA') {
-            steps { 
-                withGradle {               
-                    sh './gradlew check'
-                }
+            steps {
+               withGradle {
+                   sh './gradlew check'
+               }
+               withSonarQubeEnv(credentialsId: '366cad3b5c2e3fc5f6bf3a6b01a08205d5ca1f11', installationName: 'local'){
+                    sh'.gradlew sonarqube'
+               }
             }
-            //post {
-               //always {
-                    //recordIssues enabledForFailure: true, tool: sonarQube(pattern: 'build/sonar/*.xml')
-               // }
-           // }
+            post {
+               always {
+                    recordIssues enabledForFailure: true, tool: spotBugs(pattern: 'build/reports/spotbugs/*.xml')
+                    recordIssues enabledForFailure: true, tool: pmdParser(pattern: 'build/reports/pmd/*.xml')
+               }
+            }
         }
         stage('Build') {
             steps {
