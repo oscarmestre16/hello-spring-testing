@@ -23,7 +23,7 @@ pipeline {
             }
             post {
                 always {
-                    recordIssues enabledForFailure: true, tool: spotBugs(pattern: 'build/reports/spotbugs/*.xml')
+                    recordIssues enabledForFailure: true, tool: sonarQube(pattern: 'build/sonar/*.xml')
                 }
             }
         }
