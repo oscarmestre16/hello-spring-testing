@@ -7,13 +7,17 @@ pipeline {
     stages {
         stage('Test') {
             steps {
+                configFileProvider(
+                [configFile(fileId: 'GradleProperties-sonarqube', targetLocation: 'gradle.properties')])  {
+                 sh './gradlew sonarqube'
+                }
                sh './gradlew clean test check'
             }
-            post {
-                always {
-                    junit 'build/test-results/test/TEST-*.xml'
-                }
-            }
+            //post {
+              //  always {
+                //    junit 'build/test-results/test/TEST-*.xml'
+                //}
+            //}
         }
         stage('QA') {
             steps { 
@@ -21,11 +25,11 @@ pipeline {
                     sh './gradlew check'
                 }
             }
-            post {
-                always {
-                    recordIssues enabledForFailure: true, tool: sonarQube(pattern: 'build/sonar/*.xml')
-                }
-            }
+           // post {
+           //     always {
+           //         recordIssues enabledForFailure: true, tool: sonarQube(pattern: 'build/sonar/*.xml')
+           //     }
+           // }
         }
         stage('Build') {
             steps {
@@ -33,11 +37,11 @@ pipeline {
                     sh './gradlew assemble'
                 }
             }
-            post {
-                success {
-                    archiveArtifacts 'build/libs/*.jar'
-                }
-            }
+          //  post {
+           //     success {
+            //        archiveArtifacts 'build/libs/*.jar'
+            //    }
+            //}
         }
     }
 }
