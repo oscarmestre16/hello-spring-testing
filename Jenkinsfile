@@ -5,13 +5,13 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage('Build') {
+        stage('Test') {
             steps {
                sh './gradlew clean test check'
             }
             post {
                 always {
-                    junit 'build/test-result/test/TEST-*.xml'
+                    junit 'build/test-results/test/TEST-*.xml'
                 }
             }
         }
@@ -23,20 +23,20 @@ pipeline {
             }
             post {
                 always {
-                    recordIssues enabledForFailure: true, tool: spotbugs(pattern: 'build/reports/spotbugs/*.xml')
+                    recordIssues enabledForFailure: true, tool: pmdParser(pattern: 'build/reports/spotbugs/*.xml')
                 }
             }
-            stage('QA') {
-                  steps {
-                     withGradle {
-                        sh './gradlew assemble'
-                     }
-                  }
-                  post {
-                    success {
-                       archiveArtifacts 'build/libs/*.jar'
-                    }
-                  }
+        }
+        stage('Build') {
+            steps {
+                withGradle {
+                    sh './gradlew assemble'
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts 'build/libs/*.jar'
+                }
             }
         }
     }
