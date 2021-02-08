@@ -2,7 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'info.solidsoft.pitest' version '1.5.1'
+	//id 'info.solidsoft.pitest' version '1.5.1'
+	id 'checkstyle'
 }
 
 group = 'com.example'
@@ -22,11 +23,18 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
-
+/*
 pitest {
 	targetClasses = ["${project.group}.*"] //by default "${project.group}.*"
 	junit5PluginVersion = '0.12'
 	threads = 4
 	outputFormats = ['XML', 'HTML']
 	timestampedReports = false
+}*/
+checkstyle{
+	ignoreFailures = true
+}
+checkstyleTest{
+	configFile file("${project.rootDir}.idea/config/checkstyle/checkstyle.xml ")
+		//"	/config/checkstyle/checkstyle.xml")
 }
