@@ -23,7 +23,7 @@ pipeline {
             }
             post {
                 always {
-                    recordIssues enabledForFailure: true, tool: pmdParser(pattern: 'build/reports/pmd/*.xml')
+                    recordIssues enabledForFailure: true, tool: spotbugs(pattern: 'build/reports/spotbugs/*.xml')
                 }
             }
             stage('QA') {
