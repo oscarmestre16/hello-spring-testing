@@ -1,33 +1,42 @@
 pipeline {
     agent any
-    tools{
-       jdk 'OpenJDK-15.0.2'
-    }
+
     options {
         ansiColor('xterm')
     }
     stages {
         stage('Build') {
             steps {
-                git url: 'http://10.250.12.1:8929/root/hello-spring-testing.git', branch:'master'
-                sh './gradlew assemble'
+               sh './gradlew clean test check'
             }
             post {
-                success {
-                    archiveArtifacts 'build/libs/*jar'
+                always {
+                    junit 'build/test-result/test/TEST-*.xml'
                 }
             }
         }
-        stage('Test') {
+        stage('QA') {
             steps { 
                 withGradle {               
-                    sh './gradlew test'
+                    sh './gradlew check'
                 }
             }
             post {
-                success {
-                    archiveArtifacts 'build/test-results/test/TEST-*.xml'
+                always {
+                    recordIssues enabledForFailure: true, tool: pmdParser(pattern: 'build/reports/pmd/*.xml')
                 }
+            }
+            stage('QA') {
+                  steps {
+                     withGradle {
+                        sh './gradlew assemble'
+                     }
+                  }
+                  post {
+                    success {
+                       archiveArtifacts 'build/libs/*.jar'
+                    }
+                  }
             }
         }
     }
