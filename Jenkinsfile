@@ -5,7 +5,7 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage('Build') {
+        stage('Test') {
             steps {
                sh './gradlew clean test check'
             }
