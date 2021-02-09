@@ -5,7 +5,7 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage('Test') {
+        stage('Setup') {
             steps {
                sh './gradlew dependencyCheckUpdate'
             }
