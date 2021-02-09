@@ -34,8 +34,6 @@ pmd {
 }
 
 dependencyCheck {
-    autoUpdate=false
-    cveValidForHours=1
-    format='ALL'
+    format='XML'
 }
 
