@@ -16,7 +16,8 @@ pipeline {
             }
             post {
                 always {
-                    junit 'build/test-results/test/TEST-*.xml'
+                    //junit 'build/test-results/test/TEST-*.xml'
+                    junit 'build/reports/dependency-check-report.xml'
                     dependencyCheckPublisher pattern: 'build/reports/dependency-check-report.xml'
                 }
             }
