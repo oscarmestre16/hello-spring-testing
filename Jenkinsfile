@@ -5,11 +5,11 @@ pipeline {
         ansiColor('xterm')
     }
     stages {
-        stage('Setup') {
-            steps {
-               sh './gradlew dependencyCheckUpdate'
-            }
-        }
+        //stage('Setup') {
+          //  steps {
+           //    sh './gradlew dependencyCheckUpdate'
+           // }
+        //}
         stage('Test') {         
             steps {
                sh './gradlew dependencyCheckAnalyze'
