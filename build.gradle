@@ -33,3 +33,9 @@ pmd {
 	ignoreFailures = true
 }
 
+dependencyCheck {
+    autoUpdate=false
+    cveValidForHours=1
+    format='ALL'
+}
+
