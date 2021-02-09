@@ -45,14 +45,5 @@ pipeline {
                 }
             }
         }
-        stage('sonarqube') {
-            steps {
-                withGradle {
-                configFileProvider([configFile(fileId: 'GradleProperties-sonarqube',
-                 targetLocation: 'gradle.properties')])
-                    sh './gradlew sonarqube'
-                }
-            }
-        }
     }
 }
