@@ -40,16 +40,14 @@ publishing {
 	publications {
 		bootJava(MavenPublication) {
 			artifact bootJar
-			//version = '1.0.' + ( System.getenv('BUILD_NUMBER') ?: '0' )+ '-SNAPSHOT'
 		}
 	}
 	repositories {
 		maven {
-			url "http://localhost:9082/repository/snapshot/"
+			url "http://localhost:9082/repository/snapshots/"
 			credentials {
-				username  'admin-Token'
+				username  'admin'
 				password 'admin1'
-				//gitLabPrivateToken
 			}
 		}
 	}
