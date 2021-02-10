@@ -7,10 +7,12 @@ pipeline {
     stages {
         
         stage('Test') {         
-            steps {
-               sh './gradlew publish'
+            steps {               
+               withCredentials([string(credentialsId: 'gitLabPrivateToken', variable: 'gitLabPrivateToken')]){
+                   sh './gradlew publish'
+               }
+
             }
-            
 
             }
         }
