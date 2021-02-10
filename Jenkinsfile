@@ -7,10 +7,18 @@ pipeline {
     stages {
         
         stage('Test') {         
-            steps {               
-               withCredentials([string(credentialsId: 'gitLabPrivateToken', variable: 'gitLabPrivateToken')]){
-                   sh './gradlew publish'
-               }          
+            steps {
+                withGradle{
+                    sh './gradlew assemble'
+                 }
+            }
+            post {
+                success{
+                    archiveArtifacts 'build/libs/*.jar'
+                        withCredentials([string(credentialsId: 'gitLabPrivateToken', variable: 'gitLabPrivateToken')]){
+                        sh './gradlew publish'
+                    }
+                }
             }
         }
     }
